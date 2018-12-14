@@ -1,0 +1,9 @@
+package: github.com/learnergo/stealbtc
+import:
+- package: golang.org/x/crypto
+- package: github.com/btcsuite/btcd
+  subpackages:
+  - btcec
+  - chaincfg
+- package: github.com/btcsuite/btcutil
+- package: github.com/op/go-logging

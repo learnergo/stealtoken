@@ -1,0 +1,22 @@
+hash: a7654e0196f8585a98bbf90f5596db3ceb9daf4ce3d04d0b230dd064bb70d5f2
+updated: 2018-12-14T11:33:15.483988+08:00
+imports:
+- name: github.com/btcsuite/btcd
+  version: 7d2daa5bfef28c5e282571bc06416516936115ee
+  subpackages:
+  - btcec
+  - chaincfg
+  - chaincfg/chainhash
+  - wire
+- name: github.com/btcsuite/btcutil
+  version: ab6388e0c60ae4834a1f57511e20c17b5f78be4b
+  subpackages:
+  - base58
+  - bech32
+- name: github.com/op/go-logging
+  version: 970db520ece77730c7e4724c61121037378659d9
+- name: golang.org/x/crypto
+  version: 505ab145d0a99da450461ae2c1a9f6cd10d1f447
+  subpackages:
+  - ripemd160
+testImports: []
