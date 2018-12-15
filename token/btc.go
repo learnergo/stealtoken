@@ -47,6 +47,10 @@ func (b *btc) Balance(address string) (amount float64, err error) {
 
 }
 
+func (b *btc) Name() string {
+	return "btc"
+}
+
 func Newbtc(url string, assembler internal.Assembler, parser internal.Parser) *btc {
 	return &btc{
 		url:       url,

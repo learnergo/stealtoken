@@ -39,6 +39,10 @@ func (b *eth) Balance(address string) (amount float64, err error) {
 
 }
 
+func (b *eth) Name() string {
+	return "eth"
+}
+
 func Neweth(url string, assembler internal.Assembler, parser internal.Parser) *eth {
 	return &eth{
 		url:       url,

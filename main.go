@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/learnergo/stealtoken/internal"
-	"github.com/learnergo/stealtoken/record"
 	"github.com/learnergo/stealtoken/token"
+	"io/ioutil"
+	"strconv"
+	"syscall"
 )
 
 func start(t token.Token) {
@@ -13,21 +15,36 @@ func start(t token.Token) {
 
 		private, address, err := t.Generage()
 		if err != nil {
-			fmt.Println("failed to generage", err)
+			ErrorLog.Println("failed to generage", err)
+			continue
 		}
+		DebugLog.Println("----------------------")
+		DebugLog.Println(fmt.Sprintf("%s:\nprivate:%s\naddress:%s", t.Name(), private, address))
+		DebugLog.Println("----------------------")
 		balance, err := t.Balance(address)
 		if err != nil {
-			fmt.Println("failed to balance", err)
+			ErrorLog.Println("failed to balance", err)
+			continue
 		}
 		if balance > 0 {
-			record.Record(fmt.Sprintf("private:%s\naddress:%s\nbalance:%d", private, address, balance))
-			fmt.Println("found!!")
+			SuccessLog.Println("----------------------")
+			SuccessLog.Println(fmt.Sprintf("%s:\nprivate:%s\naddress:%s\nbalance:%d", t.Name(), private, address, balance))
+			SuccessLog.Println("----------------------")
+			SuccessLog.Println("found!!")
 		}
 	}
 
 }
 
+// 启动命令
+// nohup ./stealtoken 1> stealtoken.out 2> stealtoken.err
+
 func main() {
+	if pid := syscall.Getpid(); pid != 1 {
+		ioutil.WriteFile("/opt/gopath/src/github.com/learnergo/stealtoken/stealtoken.pid", []byte(strconv.Itoa(pid)), 0777)
+		//defer os.Remove("game_server.pid")
+	}
+
 	btc := token.Newbtc(
 		"https://blockchain.info/q/addressbalance/",
 		internal.NewAddAssemble(nil),
