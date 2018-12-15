@@ -37,8 +37,8 @@ func start(t token.Token) {
 }
 
 // 启动命令
-// nohup ./stealtoken 1> stealtoken.out 2> stealtoken.err
-
+// ./setup.sh up (debug)
+// 如果开启debug 日志会打印很多日志
 func main() {
 	if pid := syscall.Getpid(); pid != 1 {
 		ioutil.WriteFile("/opt/gopath/src/github.com/learnergo/stealtoken/stealtoken.pid", []byte(strconv.Itoa(pid)), 0777)

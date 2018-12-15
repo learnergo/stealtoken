@@ -7,3 +7,4 @@ import:
   - chaincfg
 - package: github.com/btcsuite/btcutil
 - package: github.com/op/go-logging
+- package: github/ethereum/go-ethereum

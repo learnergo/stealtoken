@@ -1,3 +1,6 @@
+/*
+eth 实现方式
+*/
 package token
 
 import (

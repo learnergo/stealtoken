@@ -1,3 +1,7 @@
+/*
+请求地址和address组合方式
+*/
+
 package internal
 
 import "fmt"

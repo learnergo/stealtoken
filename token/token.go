@@ -1,3 +1,6 @@
+/*
+token 接口
+*/
 package token
 
 type Token interface {

@@ -1,3 +1,6 @@
+/*
+请求结果解析方式
+*/
 package internal
 
 import (

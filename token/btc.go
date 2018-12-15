@@ -1,3 +1,6 @@
+/*
+btc 实现方式
+*/
 package token
 
 import (
@@ -35,7 +38,6 @@ func (b *btc) Generage() (string, string, error) {
 }
 
 func (b *btc) Balance(address string) (amount float64, err error) {
-	//baseUrl := "https://blockchain.info/q/addressbalance/"
 	url := b.assembler.Combine(b.url, address)
 
 	result, err := http.Get(url)
