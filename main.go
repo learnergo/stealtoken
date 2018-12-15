@@ -18,18 +18,18 @@ func start(t token.Token) {
 			ErrorLog.Println("failed to generage", err)
 			continue
 		}
-		DebugLog.Println("----------------------")
+		DebugLog.Println("----------- begin ----------")
 		DebugLog.Println(fmt.Sprintf("%s:\nprivate:%s\naddress:%s", t.Name(), private, address))
-		DebugLog.Println("----------------------")
+		DebugLog.Println("----------- end -----------")
 		balance, err := t.Balance(address)
 		if err != nil {
 			ErrorLog.Println("failed to balance", err)
 			continue
 		}
 		if balance > 0 {
-			SuccessLog.Println("----------------------")
+			SuccessLog.Println("----------- begin ----------")
 			SuccessLog.Println(fmt.Sprintf("%s:\nprivate:%s\naddress:%s\nbalance:%d", t.Name(), private, address, balance))
-			SuccessLog.Println("----------------------")
+			SuccessLog.Println("----------- end -----------")
 			SuccessLog.Println("found!!")
 		}
 	}
