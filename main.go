@@ -15,42 +15,53 @@ import (
 	"time"
 )
 
+type Rich struct {
+	name    string
+	private string
+	address string
+	balance float64
+}
+
 var isDebug = false
 
-func start(ctx context.Context, t token.Token) {
+func start(ctx context.Context, rich chan<- Rich, t token.Token) {
 
-	for {
+	go func() {
+		for {
 
-		private, address, err := t.Generage()
-		if err != nil {
-			ErrorLog.Println("failed to generage", err)
-			continue
-		}
-		if isDebug {
-			DebugLog.Println("----------- begin ----------")
-			DebugLog.Println(fmt.Sprintf("%s:\nprivate:%s\naddress:%s", t.Name(), private, address))
-			DebugLog.Println("----------- end -----------")
-		}
+			private, address, err := t.Generage()
+			if err != nil {
+				ErrorLog.Println("failed to generage", err)
+				continue
+			}
+			if isDebug {
+				DebugLog.Println("----------- begin ----------")
+				DebugLog.Println(fmt.Sprintf("%s:\nprivate:%s\naddress:%s", t.Name(), private, address))
+				DebugLog.Println("----------- end -----------")
+			}
 
-		balance, err := t.Balance(address)
-		if err != nil {
-			fmt.Println("failed to balance", err)
-			continue
-		}
-		if balance > 0 {
-			SuccessLog.Println("----------- begin ----------")
-			SuccessLog.Println(fmt.Sprintf("%s:\nprivate:%s\naddress:%s\nbalance:%d", t.Name(), private, address, balance))
-			SuccessLog.Println("----------- end -----------")
-			SuccessLog.Println("found!!")
-		}
+			balance, err := t.Balance(address)
+			if err != nil {
+				fmt.Println("failed to balance", err)
+				continue
+			}
+			if balance > 0 {
+				rich <- Rich{
+					name:    t.Name(),
+					private: private,
+					address: address,
+					balance: balance,
+				}
+			}
 
-		select {
-		case <-ctx.Done():
-			return
-		default:
+			select {
+			case <-ctx.Done():
+				return
+			default:
 
+			}
 		}
-	}
+	}()
 
 }
 
@@ -83,13 +94,15 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	rich := make(chan Rich)
+
 	for _, value := range c.TokenConfig {
 		t, err := parseToken(value)
 		if err != nil {
 			ErrorLog.Println(err)
 			os.Exit(1)
 		}
-		go start(ctx, t)
+		go start(ctx, rich, t)
 	}
 
 	// 终止监听
@@ -100,6 +113,11 @@ func main() {
 			cancel()
 			time.Sleep(1000 * time.Millisecond) // 为了取消操作的继续进行
 			return
+		case r := <-rich:
+			SuccessLog.Println("----------- begin ----------")
+			SuccessLog.Println(fmt.Sprintf("%s:\nprivate:%s\naddress:%s\nbalance:%d", r.name, r.private, r.address, r.balance))
+			SuccessLog.Println("----------- end -----------")
+			SuccessLog.Println("found!!")
 		default:
 
 		}
