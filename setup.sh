@@ -1,18 +1,13 @@
 #!/bin/bash
 
 UP_DOWN="$1"
-DEBUG="$2"
 
 function printHelp () {
 	echo "Usage: ./network_setup <up|down> <\$DEBUG> .\nThe arguments must be in order."
 }
 
 function up () {
-    if [ "${DEBUG}" == "debug" ]; then
-        nohup ./stealtoken 1> stealtoken.out 2> stealtoken.err &
-    else
-        nohup ./stealtoken 2> stealtoken.err &
-    fi
+    nohup ./stealtoken 1> stealtoken.out 2> stealtoken.err &
 }
 
 function down(){

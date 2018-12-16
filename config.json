@@ -1,0 +1,23 @@
+{
+  "debug": false,
+  "token": [
+    {
+      "name": "btc",
+      "url": "https://blockchain.info/q/addressbalance/",
+      "assemble": "add",
+      "parser": {
+        "method": "float",
+        "route": ""
+      }
+    },
+    {
+      "name": "eth",
+      "url": "https://api.etherscan.io/api?module=account&action=balance&address=%s&tag=latest&apikey=eth",
+      "assemble": "occupy",
+      "parser": {
+        "method": "json",
+        "route": "result"
+      }
+    }
+  ]
+}
