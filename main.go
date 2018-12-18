@@ -42,7 +42,7 @@ func start(ctx context.Context, rich chan<- Rich, t token.Token) {
 
 			balance, err := t.Balance(address)
 			if err != nil {
-				fmt.Println("failed to balance", err)
+				ErrorLog.Println("failed to balance", err)
 				continue
 			}
 			if balance > 0 {
