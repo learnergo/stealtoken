@@ -6,7 +6,8 @@ import (
 	"os"
 )
 
-var recodeFile = "/opt/gopath/src/github.com/learnergo/stealtoken/stealtoken.suc"
+// 相对$GOPATH/src 目录
+var recodeFile = "github.com/learnergo/stealtoken/stealtoken.suc"
 var (
 	ErrorLog   = log.New(os.Stderr, "[ERROR]", log.LstdFlags)
 	DebugLog   = log.New(os.Stdout, "[DEBUG]", log.LstdFlags)
