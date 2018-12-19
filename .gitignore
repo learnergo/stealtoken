@@ -3,3 +3,5 @@ stealtoken.err
 stealtoken.out
 stealtoken.pid
 stealtoken.suc
+
+.DS_Store
